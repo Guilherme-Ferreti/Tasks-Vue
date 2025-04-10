@@ -4,9 +4,15 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
+import { BreadcrumbItem } from '@/types';
 import { Head, useForm } from '@inertiajs/vue3';
 import { Loader2 } from 'lucide-vue-next';
 import { toast } from 'vue-sonner';
+
+const breadcrumbs: BreadcrumbItem[] = [
+    { title: 'Tasks', href: route('tasks.index') },
+    { title: 'Create', href: '' },
+];
 
 const form = useForm({
     name: '',
@@ -21,7 +27,7 @@ const submitForm = () => {
 </script>
 
 <template>
-    <AppLayout>
+    <AppLayout :breadcrumbs="breadcrumbs">
         <Head title="Create task" />
         <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
             <form class="space-y-6" @submit.prevent="submitForm">

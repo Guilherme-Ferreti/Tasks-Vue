@@ -20,10 +20,10 @@ const deleteTask = (id: string) => {
 <template>
     <AppLayout>
         <Head title="Tasks" />
-        <div class="mt-4">
+        <div class="mt-4 flex justify-end">
             <Link :class="buttonVariants({ variant: 'outline' })" :href="route('tasks.create')">Create task</Link>
         </div>
-        <Table class="mt-4">
+        <Table>
             <TableHeader>
                 <TableRow>
                     <TableHead>Task</TableHead>

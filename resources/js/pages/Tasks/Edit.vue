@@ -5,12 +5,17 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { Task } from '@/types';
+import { BreadcrumbItem, Task } from '@/types';
 import { Head, useForm } from '@inertiajs/vue3';
 import { Loader2 } from 'lucide-vue-next';
 import { toast } from 'vue-sonner';
 
 const props = defineProps<{ task: Task }>();
+
+const breadcrumbs: BreadcrumbItem[] = [
+    { title: 'Tasks', href: route('tasks.index') },
+    { title: 'Edit', href: '' },
+];
 
 const form = useForm({
     name: props.task.name,
@@ -26,7 +31,7 @@ const submitForm = () => {
 </script>
 
 <template>
-    <AppLayout>
+    <AppLayout :breadcrumbs="breadcrumbs">
         <Head title="Edit task" />
         <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
             <form class="space-y-6" @submit.prevent="submitForm">
