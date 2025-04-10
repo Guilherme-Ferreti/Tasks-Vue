@@ -5,6 +5,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
+import { Loader2 } from 'lucide-vue-next';
+import { toast } from 'vue-sonner';
 
 const form = useForm({
     name: '',
@@ -13,6 +15,7 @@ const form = useForm({
 const submitForm = () => {
     form.post(route('tasks.store'), {
         preserveScroll: true,
+        onSuccess: () => toast.success('Task created successfully!'),
     });
 };
 </script>
@@ -31,7 +34,10 @@ const submitForm = () => {
                 </div>
 
                 <div class="flex items-center gap-4">
-                    <Button type="submit" :disabled="form.processing" variant="default">Create Task</Button>
+                    <Button type="submit" :disabled="form.processing" variant="default">
+                        <Loader2 v-if="form.processing" class="mr-2 h-4 w-4 animate-spin" />
+                        {{ form.processing ? 'Please wait' : 'Create Task' }}
+                    </Button>
                 </div>
             </form>
         </div>

@@ -4,6 +4,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Task } from '@/types';
 import { Head, Link, router } from '@inertiajs/vue3';
+import { Pencil, Trash } from 'lucide-vue-next';
 import { toast } from 'vue-sonner';
 
 defineProps<{ tasks: Task[] }>();
@@ -33,12 +34,16 @@ const deleteTask = (id: string) => {
             <TableBody>
                 <TableRow v-for="task in tasks" :key="task.id">
                     <TableCell>{{ task.name }}</TableCell>
-                    <TableCell :class="{ 'text-green-600': task.is_completed, 'text-red-700': !task.is_completed }">
+                    <TableCell :class="{ 'text-green-600': task.is_completed, 'text-blue-700': !task.is_completed }">
                         {{ task.is_completed ? 'Completed' : 'In Progress' }}
                     </TableCell>
                     <TableCell class="flex gap-x-2 text-right">
-                        <Link :href="route('tasks.edit', task.id)" :class="buttonVariants({ variant: 'default' })" class="mr-2">Edit</Link>
-                        <Button variant="destructive" @click="deleteTask(task.id)" class="mr-2">Delete</Button>
+                        <Link :href="route('tasks.edit', task.id)" :class="buttonVariants({ variant: 'outline' })" class="mr-2">
+                            <Pencil />
+                        </Link>
+                        <Button variant="outline" @click="deleteTask(task.id)" class="mr-2">
+                            <Trash />
+                        </Button>
                     </TableCell>
                 </TableRow>
             </TableBody>

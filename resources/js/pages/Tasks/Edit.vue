@@ -7,6 +7,8 @@ import { Switch } from '@/components/ui/switch';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Task } from '@/types';
 import { Head, useForm } from '@inertiajs/vue3';
+import { Loader2 } from 'lucide-vue-next';
+import { toast } from 'vue-sonner';
 
 const props = defineProps<{ task: Task }>();
 
@@ -16,10 +18,9 @@ const form = useForm({
 });
 
 const submitForm = () => {
-    console.log({ propName: props.task.name, formName: form.name });
-
     form.put(route('tasks.update', props.task.id), {
         preserveScroll: true,
+        onSuccess: () => toast.success('Task updated successfully!'),
     });
 };
 </script>
@@ -46,7 +47,10 @@ const submitForm = () => {
                 </div>
 
                 <div class="flex items-center gap-4">
-                    <Button type="submit" :disabled="form.processing" variant="default">Update Task</Button>
+                    <Button type="submit" :disabled="form.processing" variant="default">
+                        <Loader2 v-if="form.processing" class="mr-2 h-4 w-4 animate-spin" />
+                        {{ form.processing ? 'Please wait' : 'Update Task' }}
+                    </Button>
                 </div>
             </form>
         </div>
