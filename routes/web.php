@@ -11,7 +11,7 @@ Route::get('/', fn () => Inertia::render('Welcome'))->name('home');
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', fn () => Inertia::render('Dashboard'))->name('dashboard');
 
-    Route::resource('tasks', TaskController::class);
+    Route::resource('tasks', TaskController::class)->except('show');
 });
 
 require __DIR__ . '/settings.php';

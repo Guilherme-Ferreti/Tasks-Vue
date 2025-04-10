@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Task } from '@/types';
-import { Head, router } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 import { toast } from 'vue-sonner';
 
 defineProps<{ tasks: Task[] }>();
@@ -19,6 +19,9 @@ const deleteTask = (id: string) => {
 <template>
     <AppLayout>
         <Head title="Tasks" />
+        <div class="mt-4">
+            <Link :class="buttonVariants({ variant: 'outline' })" :href="route('tasks.create')">Create task</Link>
+        </div>
         <Table class="mt-4">
             <TableHeader>
                 <TableRow>
