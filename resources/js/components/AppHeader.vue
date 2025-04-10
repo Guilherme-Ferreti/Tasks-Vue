@@ -41,12 +41,12 @@ const activeItemStyles = computed(
 const mainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
-        href: '/dashboard',
+        href: route('dashboard'),
         icon: LayoutGrid,
     },
     {
         title: 'Tasks',
-        href: '/tasks',
+        href: route('tasks.index'),
         icon: BriefcaseIcon,
     },
 ];
