@@ -36,7 +36,8 @@ const deleteTask = (id: string) => {
                     <TableCell :class="{ 'text-green-600': task.is_completed, 'text-red-700': !task.is_completed }">
                         {{ task.is_completed ? 'Completed' : 'In Progress' }}
                     </TableCell>
-                    <TableCell class="text-right">
+                    <TableCell class="flex gap-x-2 text-right">
+                        <Link :href="route('tasks.edit', task.id)" :class="buttonVariants({ variant: 'default' })" class="mr-2">Edit</Link>
                         <Button variant="destructive" @click="deleteTask(task.id)" class="mr-2">Delete</Button>
                     </TableCell>
                 </TableRow>
