@@ -1,13 +1,14 @@
 <script setup lang="ts">
+import Pagination from '@/components/Pagination.vue';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { Task } from '@/types';
+import { PaginatedResponse, Task } from '@/types';
 import { Head, Link, router } from '@inertiajs/vue3';
 import { Pencil, Trash } from 'lucide-vue-next';
 import { toast } from 'vue-sonner';
 
-defineProps<{ tasks: Task[] }>();
+defineProps<{ tasks: PaginatedResponse<Task> }>();
 
 const deleteTask = (id: string) => {
     if (confirm('Are you sure you want to delete this task?')) {
@@ -32,7 +33,7 @@ const deleteTask = (id: string) => {
                 </TableRow>
             </TableHeader>
             <TableBody>
-                <TableRow v-for="task in tasks" :key="task.id">
+                <TableRow v-for="task in tasks.data" :key="task.id">
                     <TableCell>{{ task.name }}</TableCell>
                     <TableCell :class="{ 'text-green-600': task.is_completed, 'text-blue-700': !task.is_completed }">
                         {{ task.is_completed ? 'Completed' : 'In Progress' }}
@@ -48,5 +49,6 @@ const deleteTask = (id: string) => {
                 </TableRow>
             </TableBody>
         </Table>
+        <Pagination :response="tasks" />
     </AppLayout>
 </template>
