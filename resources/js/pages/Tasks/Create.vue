@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import AppCalendarInput from '@/components/AppCalendarInput.vue';
 import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -16,6 +17,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 const form = useForm({
     name: '',
+    due_date: '',
 });
 
 const submitForm = () => {
@@ -33,12 +35,14 @@ const submitForm = () => {
             <form class="space-y-6" @submit.prevent="submitForm">
                 <div class="grid gap-2">
                     <Label htmlFor="name">Task Name *</Label>
-
                     <Input id="name" v-model="form.name" class="mt-1 block w-full" />
-
                     <InputError :message="form.errors.name" />
                 </div>
-
+                <div class="grid gap-2">
+                    <Label htmlFor="name">Due Date</Label>
+                    <AppCalendarInput v-model="form.due_date" />
+                    <InputError :message="form.errors.due_date" />
+                </div>
                 <div class="flex items-center gap-4">
                     <Button type="submit" :disabled="form.processing" variant="default">
                         <Loader2 v-if="form.processing" class="mr-2 h-4 w-4 animate-spin" />

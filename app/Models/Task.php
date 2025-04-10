@@ -15,6 +15,7 @@ class Task extends Model
 
     protected $fillable = [
         'name',
+        'due_date',
         'is_completed',
     ];
 
@@ -22,6 +23,7 @@ class Task extends Model
     {
         return [
             'is_completed' => 'boolean',
+            'due_date'     => 'date:Y-m-d',
         ];
     }
 }

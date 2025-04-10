@@ -21,6 +21,7 @@ class TaskFactory extends Factory
         return [
             'name'         => fake()->sentence(),
             'is_completed' => fake()->boolean(),
+            'due_date'     => fake()->date(),
         ];
     }
 }

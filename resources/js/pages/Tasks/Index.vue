@@ -5,6 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import AppLayout from '@/layouts/AppLayout.vue';
 import { PaginatedResponse, Task } from '@/types';
 import { Head, Link, router } from '@inertiajs/vue3';
+import { format } from 'date-fns';
 import { Pencil, Trash } from 'lucide-vue-next';
 import { toast } from 'vue-sonner';
 
@@ -28,21 +29,23 @@ const deleteTask = (id: string) => {
             <TableHeader>
                 <TableRow>
                     <TableHead>Task</TableHead>
-                    <TableHead class="w-[100px]">Status</TableHead>
-                    <TableHead class="w-[100px] text-right">Actions</TableHead>
+                    <TableHead>Due Date</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead class="text-right">Actions</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
                 <TableRow v-for="task in tasks.data" :key="task.id">
                     <TableCell>{{ task.name }}</TableCell>
+                    <TableCell>{{ format(new Date(task.due_date), 'MMMM d, yyyy') }}</TableCell>
                     <TableCell :class="{ 'text-green-600': task.is_completed, 'text-blue-700': !task.is_completed }">
                         {{ task.is_completed ? 'Completed' : 'In Progress' }}
                     </TableCell>
-                    <TableCell class="flex gap-x-2 text-right">
-                        <Link :href="route('tasks.edit', task.id)" :class="buttonVariants({ variant: 'outline' })" class="mr-2">
+                    <TableCell class="flex justify-end gap-x-2">
+                        <Link :href="route('tasks.edit', task.id)" :class="buttonVariants({ variant: 'outline' })">
                             <Pencil />
                         </Link>
-                        <Button variant="outline" @click="deleteTask(task.id)" class="mr-2">
+                        <Button variant="outline" @click="deleteTask(task.id)">
                             <Trash />
                         </Button>
                     </TableCell>

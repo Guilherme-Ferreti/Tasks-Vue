@@ -60,6 +60,7 @@ export interface Task {
     id: string;
     name: string;
     is_completed: boolean;
+    due_date: string;
     created_at: string;
     updated_at: string;
 }
