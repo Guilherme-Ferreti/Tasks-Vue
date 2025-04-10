@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Task } from '@/types';
 import { Head, useForm } from '@inertiajs/vue3';
@@ -40,7 +40,7 @@ const submitForm = () => {
                 <div class="grid gap-2">
                     <Label htmlFor="is_completed">Completed?</Label>
 
-                    <Checkbox id="is_completed" v-model="form.is_completed" class="mt-1" />
+                    <Switch id="is_completed" v-model="form.is_completed" class="mt-1 cursor-pointer" />
 
                     <InputError :message="form.errors.is_completed" />
                 </div>
