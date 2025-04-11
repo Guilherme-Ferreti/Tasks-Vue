@@ -11,12 +11,12 @@ import { toast } from 'vue-sonner';
 
 defineProps<{ tasks: PaginatedResponse<Task> }>();
 
-const deleteTask = (id: string) => {
+function deleteTask(id: string) {
     if (confirm('Are you sure you want to delete this task?')) {
         router.delete(route('tasks.destroy', id));
         toast.success('Task deleted successfully!');
     }
-};
+}
 </script>
 
 <template>
@@ -29,9 +29,9 @@ const deleteTask = (id: string) => {
             <TableHeader>
                 <TableRow>
                     <TableHead>Task</TableHead>
-                    <TableHead>Due Date</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead class="text-right">Actions</TableHead>
+                    <TableHead class="w-[150px]">Due Date</TableHead>
+                    <TableHead class="w-[120px]">Status</TableHead>
+                    <TableHead class="w-[120px]">Actions</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
@@ -52,6 +52,6 @@ const deleteTask = (id: string) => {
                 </TableRow>
             </TableBody>
         </Table>
-        <Pagination :response="tasks" />
+        <Pagination :meta="tasks.meta" />
     </AppLayout>
 </template>

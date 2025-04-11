@@ -24,12 +24,12 @@ const form = useForm({
     is_completed: props.task.is_completed,
 });
 
-const submitForm = () => {
+function submitForm() {
     form.put(route('tasks.update', props.task.id), {
         preserveScroll: true,
         onSuccess: () => toast.success('Task updated successfully!'),
     });
-};
+}
 </script>
 
 <template>

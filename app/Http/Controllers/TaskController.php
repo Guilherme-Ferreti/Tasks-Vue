@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use App\Http\Resources\TaskResource;
 use App\Models\Task;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
@@ -15,8 +16,13 @@ class TaskController extends Controller
 {
     public function index(): Response
     {
+        $tasks = Task::query()
+            ->orderBy('is_completed')
+            ->orderBy('due_date')
+            ->paginate(10);
+
         return Inertia::render('Tasks/Index', [
-            'tasks' => Task::paginate(10),
+            'tasks' => TaskResource::collection($tasks),
         ]);
     }
 
