@@ -67,8 +67,11 @@ export interface Task {
     name: string;
     is_completed: boolean;
     due_date: string;
-    created_at: string;
-    updated_at: string;
+    media?: {
+        name: string;
+        url: string;
+        type: string;
+    };
 }
 
 export type BreadcrumbItemType = BreadcrumbItem;

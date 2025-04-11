@@ -19,6 +19,7 @@ class StoreTaskRequest extends FormRequest
         return [
             'name'     => ['required', 'string', 'max:255'],
             'due_date' => ['required', 'date:Y-m-d'],
+            'media'    => ['nullable', 'file', 'max:10240'],
         ];
     }
 }

@@ -20,7 +20,13 @@ class TaskResource extends JsonResource
             'id'           => $this->id,
             'name'         => $this->name,
             'is_completed' => $this->is_completed,
-            'due_date'     => $this->due_date,
+            'due_date'     => $this->due_date->format('Y-m-d'),
+
+            'media' => $this->when($this->getFirstMedia(), fn () => [
+                'url'  => $this->getFirstMediaUrl(),
+                'name' => $this->getFirstMedia()->name,
+                'type' => $this->getFirstMedia()->mime_type,
+            ], null),
         ];
     }
 }

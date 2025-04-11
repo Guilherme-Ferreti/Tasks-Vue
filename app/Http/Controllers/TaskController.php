@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
-use App\Http\Resources\TaskResource;
 use App\Models\Task;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
@@ -19,10 +18,11 @@ class TaskController extends Controller
         $tasks = Task::query()
             ->orderBy('is_completed')
             ->orderBy('due_date')
+            ->with('media')
             ->paginate(10);
 
         return Inertia::render('Tasks/Index', [
-            'tasks' => TaskResource::collection($tasks),
+            'tasks' => $tasks->toResourceCollection(),
         ]);
     }
 
@@ -33,21 +33,32 @@ class TaskController extends Controller
 
     public function store(StoreTaskRequest $request): RedirectResponse
     {
-        Task::create($request->validated());
+        $task = Task::create($request->validated());
+
+        if ($request->file('media')) {
+            $task->addMedia($request->file('media'))->toMediaCollection();
+        }
 
         return to_route('tasks.index');
     }
 
     public function edit(Task $task): Response
     {
+        $task->load('media');
+
         return Inertia::render('Tasks/Edit', [
-            'task' => $task,
+            'task' => $task->toResource(),
         ]);
     }
 
     public function update(UpdateTaskRequest $request, Task $task): RedirectResponse
     {
         $task->update($request->validated());
+
+        if ($request->file('media')) {
+            $task->clearMediaCollection();
+            $task->addMedia($request->file('media'))->toMediaCollection();
+        }
 
         return to_route('tasks.index');
     }

@@ -6,7 +6,7 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { displayDate } from '@/lib/utils';
 import { PaginatedResponse, Task } from '@/types';
 import { Head, Link, router } from '@inertiajs/vue3';
-import { Pencil, Trash } from 'lucide-vue-next';
+import { File, FileAudio, FileImage, FileText, FileVideo, Pencil, Trash } from 'lucide-vue-next';
 import { toast } from 'vue-sonner';
 
 defineProps<{ tasks: PaginatedResponse<Task> }>();
@@ -29,6 +29,7 @@ function deleteTask(id: string) {
             <TableHeader>
                 <TableRow>
                     <TableHead>Task</TableHead>
+                    <TableHead class="w-[150px]">File</TableHead>
                     <TableHead class="w-[150px]">Due Date</TableHead>
                     <TableHead class="w-[120px]">Status</TableHead>
                     <TableHead class="w-[120px]">Actions</TableHead>
@@ -37,6 +38,19 @@ function deleteTask(id: string) {
             <TableBody>
                 <TableRow v-for="task in tasks.data" :key="task.id">
                     <TableCell>{{ task.name }}</TableCell>
+                    <TableCell class="text-sm text-gray-600">
+                        <span v-if="!task.media">No file.</span>
+                        <a v-else :href="task.media.url" target="_blank" :title="task.media.name">
+                            <span class="flex items-center justify-between">
+                                {{ task.media.type }}
+                                <FileAudio v-if="task.media.type.includes('audio')" />
+                                <FileVideo v-else-if="task.media.type.includes('video')" />
+                                <FileImage v-else-if="task.media.type.includes('image')" />
+                                <FileText v-else-if="task.media.type.includes('pdf')" />
+                                <File v-else />
+                            </span>
+                        </a>
+                    </TableCell>
                     <TableCell>{{ displayDate(task.due_date) }}</TableCell>
                     <TableCell :class="{ 'text-green-600': task.is_completed, 'text-blue-700': !task.is_completed }">
                         {{ task.is_completed ? 'Completed' : 'In Progress' }}

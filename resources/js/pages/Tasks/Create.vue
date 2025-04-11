@@ -18,6 +18,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 const form = useForm({
     name: '',
     due_date: '',
+    media: null as File | null,
 });
 
 function submitForm() {
@@ -42,6 +43,11 @@ function submitForm() {
                     <Label htmlFor="name">Due Date</Label>
                     <AppCalendarInput v-model="form.due_date" />
                     <InputError :message="form.errors.due_date" />
+                </div>
+                <div class="grid gap-2">
+                    <Label htmlFor="media">Media</Label>
+                    <Input id="media" type="file" class="mt-1 block w-full" @change="form.media = $event.target.files?.[0]" />
+                    <InputError :message="form.errors.media" />
                 </div>
                 <div class="flex items-center gap-4">
                     <Button type="submit" :disabled="form.processing" variant="default">
