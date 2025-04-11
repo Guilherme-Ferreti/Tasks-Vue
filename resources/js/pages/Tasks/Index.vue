@@ -3,9 +3,9 @@ import Pagination from '@/components/Pagination.vue';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AppLayout from '@/layouts/AppLayout.vue';
+import { displayDate } from '@/lib/utils';
 import { PaginatedResponse, Task } from '@/types';
 import { Head, Link, router } from '@inertiajs/vue3';
-import { format } from 'date-fns';
 import { Pencil, Trash } from 'lucide-vue-next';
 import { toast } from 'vue-sonner';
 
@@ -37,7 +37,7 @@ function deleteTask(id: string) {
             <TableBody>
                 <TableRow v-for="task in tasks.data" :key="task.id">
                     <TableCell>{{ task.name }}</TableCell>
-                    <TableCell>{{ format(new Date(task.due_date), 'MMMM d, yyyy') }}</TableCell>
+                    <TableCell>{{ displayDate(task.due_date) }}</TableCell>
                     <TableCell :class="{ 'text-green-600': task.is_completed, 'text-blue-700': !task.is_completed }">
                         {{ task.is_completed ? 'Completed' : 'In Progress' }}
                     </TableCell>

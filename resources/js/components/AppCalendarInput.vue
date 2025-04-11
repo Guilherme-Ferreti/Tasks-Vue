@@ -2,9 +2,8 @@
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { cn } from '@/lib/utils';
+import { cn, displayDate } from '@/lib/utils';
 import { type DateValue, parseDate } from '@internationalized/date';
-import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-vue-next';
 import { computed } from 'vue';
 
@@ -20,7 +19,9 @@ const props = defineProps({
 });
 
 const inputValue = computed({
-    get: () => (props.modelValue ? parseDate(props.modelValue) : undefined),
+    get: () => {
+        return props.modelValue ? parseDate(props.modelValue) : undefined;
+    },
     set: (value: DateValue | undefined) => {
         emit('update:modelValue', value ? value.toString() : '');
     },
@@ -29,7 +30,7 @@ const inputValue = computed({
 const dateFormatted = computed(() => {
     if (!inputValue.value) return '';
 
-    return format(new Date(inputValue.value.toString()), 'MMMM d, yyyy');
+    return displayDate(inputValue.value.toString());
 });
 </script>
 
