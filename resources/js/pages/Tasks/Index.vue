@@ -22,7 +22,7 @@ function deleteTask(id: string) {
 <template>
     <AppLayout>
         <Head title="Tasks" />
-        <div class="mt-4 flex justify-end">
+        <div class="flex justify-end">
             <Link :class="buttonVariants({ variant: 'outline' })" :href="route('tasks.create')">Create task</Link>
         </div>
         <Table>
@@ -41,7 +41,7 @@ function deleteTask(id: string) {
                     <TableCell class="text-sm text-gray-600">
                         <span v-if="!task.media">No file.</span>
                         <a v-else :href="task.media.url" target="_blank" :title="task.media.name">
-                            <span class="flex items-center justify-between">
+                            <span class="flex items-center justify-between gap-2">
                                 {{ task.media.type }}
                                 <FileAudio v-if="task.media.type.includes('audio')" />
                                 <FileVideo v-else-if="task.media.type.includes('video')" />
