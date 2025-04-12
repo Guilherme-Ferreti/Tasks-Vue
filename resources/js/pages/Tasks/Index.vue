@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Pagination from '@/components/Pagination.vue';
 import { Button, buttonVariants } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { displayDate } from '@/lib/utils';
@@ -23,49 +24,53 @@ function deleteTask(id: string) {
     <AppLayout>
         <Head title="Tasks" />
         <div class="flex justify-end">
-            <Link :class="buttonVariants({ variant: 'outline' })" :href="route('tasks.create')">Create task</Link>
+            <Link :class="buttonVariants({ variant: 'secondary' })" :href="route('tasks.create')">Create task</Link>
         </div>
-        <Table>
-            <TableHeader>
-                <TableRow>
-                    <TableHead>Task</TableHead>
-                    <TableHead class="w-[150px]">File</TableHead>
-                    <TableHead class="w-[150px]">Due Date</TableHead>
-                    <TableHead class="w-[120px]">Status</TableHead>
-                    <TableHead class="w-[120px]">Actions</TableHead>
-                </TableRow>
-            </TableHeader>
-            <TableBody>
-                <TableRow v-for="task in tasks.data" :key="task.id">
-                    <TableCell>{{ task.name }}</TableCell>
-                    <TableCell class="text-sm text-gray-600">
-                        <span v-if="!task.media">No file.</span>
-                        <a v-else :href="task.media.url" target="_blank" :title="task.media.name">
-                            <span class="flex items-center justify-between gap-2">
-                                {{ task.media.type }}
-                                <FileAudio v-if="task.media.type.includes('audio')" />
-                                <FileVideo v-else-if="task.media.type.includes('video')" />
-                                <FileImage v-else-if="task.media.type.includes('image')" />
-                                <FileText v-else-if="task.media.type.includes('pdf')" />
-                                <File v-else />
-                            </span>
-                        </a>
-                    </TableCell>
-                    <TableCell>{{ displayDate(task.due_date) }}</TableCell>
-                    <TableCell :class="{ 'text-green-600': task.is_completed, 'text-blue-700': !task.is_completed }">
-                        {{ task.is_completed ? 'Completed' : 'In Progress' }}
-                    </TableCell>
-                    <TableCell class="flex justify-end gap-x-2">
-                        <Link :href="route('tasks.edit', task.id)" :class="buttonVariants({ variant: 'outline' })">
-                            <Pencil />
-                        </Link>
-                        <Button variant="outline" @click="deleteTask(task.id)">
-                            <Trash />
-                        </Button>
-                    </TableCell>
-                </TableRow>
-            </TableBody>
-        </Table>
-        <Pagination :meta="tasks.meta" />
+        <Card class="flex justify-end">
+            <CardContent class="space-y-6">
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead>Task</TableHead>
+                            <TableHead class="w-[150px]">File</TableHead>
+                            <TableHead class="w-[150px]">Due Date</TableHead>
+                            <TableHead class="w-[120px]">Status</TableHead>
+                            <TableHead class="w-[120px] text-right">Actions</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        <TableRow v-for="task in tasks.data" :key="task.id">
+                            <TableCell>{{ task.name }}</TableCell>
+                            <TableCell class="text-sm text-gray-600">
+                                <span v-if="!task.media">No file.</span>
+                                <a v-else :href="task.media.url" target="_blank" :title="task.media.name">
+                                    <span class="flex items-center justify-between gap-2">
+                                        {{ task.media.type }}
+                                        <FileAudio v-if="task.media.type.includes('audio')" />
+                                        <FileVideo v-else-if="task.media.type.includes('video')" />
+                                        <FileImage v-else-if="task.media.type.includes('image')" />
+                                        <FileText v-else-if="task.media.type.includes('pdf')" />
+                                        <File v-else />
+                                    </span>
+                                </a>
+                            </TableCell>
+                            <TableCell>{{ displayDate(task.due_date) }}</TableCell>
+                            <TableCell :class="{ 'text-green-600': task.is_completed, 'text-blue-700': !task.is_completed }">
+                                {{ task.is_completed ? 'Completed' : 'In Progress' }}
+                            </TableCell>
+                            <TableCell class="flex justify-end gap-x-2">
+                                <Link :href="route('tasks.edit', task.id)" :class="buttonVariants({ variant: 'secondary' })">
+                                    <Pencil />
+                                </Link>
+                                <Button variant="secondary" @click="deleteTask(task.id)">
+                                    <Trash />
+                                </Button>
+                            </TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+                <Pagination :meta="tasks.meta" />
+            </CardContent>
+        </Card>
     </AppLayout>
 </template>

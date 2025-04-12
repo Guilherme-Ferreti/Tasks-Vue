@@ -2,6 +2,7 @@
 import AppButton from '@/components/AppButton.vue';
 import AppCalendarInput from '@/components/AppCalendarInput.vue';
 import InputError from '@/components/InputError.vue';
+import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
@@ -31,25 +32,29 @@ function submitForm() {
 <template>
     <AppLayout :breadcrumbs="breadcrumbs">
         <Head title="Create task" />
-        <form class="space-y-6" @submit.prevent="submitForm">
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div class="grid gap-2">
-                    <Label htmlFor="name">Task Name *</Label>
-                    <Input id="name" v-model="form.name" class="mt-1 block w-full" />
-                    <InputError :message="form.errors.name" />
-                </div>
-                <div class="grid gap-2">
-                    <Label htmlFor="due_date">Due Date</Label>
-                    <AppCalendarInput v-model="form.due_date" id="due_date" class="mt-1 block w-full" />
-                    <InputError :message="form.errors.due_date" />
-                </div>
-                <div class="grid gap-2">
-                    <Label htmlFor="media">Media</Label>
-                    <Input id="media" type="file" class="mt-1 block w-full" @change="form.media = $event.target.files?.[0]" />
-                    <InputError :message="form.errors.media" />
-                </div>
-            </div>
-            <AppButton type="submit" variant="default" label="Create task" :isLoading="form.processing" />
-        </form>
+        <Card>
+            <CardContent>
+                <form class="space-y-6" @submit.prevent="submitForm">
+                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                        <div class="grid gap-2">
+                            <Label htmlFor="name">Task Name *</Label>
+                            <Input id="name" v-model="form.name" class="mt-1 block w-full" />
+                            <InputError :message="form.errors.name" />
+                        </div>
+                        <div class="grid gap-2">
+                            <Label htmlFor="due_date">Due Date</Label>
+                            <AppCalendarInput v-model="form.due_date" id="due_date" class="mt-1 block w-full" />
+                            <InputError :message="form.errors.due_date" />
+                        </div>
+                        <div class="grid gap-2">
+                            <Label htmlFor="media">Media</Label>
+                            <Input id="media" type="file" class="mt-1 block w-full" @change="form.media = $event.target.files?.[0]" />
+                            <InputError :message="form.errors.media" />
+                        </div>
+                    </div>
+                    <AppButton type="submit" variant="default" label="Create task" :isLoading="form.processing" />
+                </form>
+            </CardContent>
+        </Card>
     </AppLayout>
 </template>
