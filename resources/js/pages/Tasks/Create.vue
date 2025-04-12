@@ -1,13 +1,12 @@
 <script setup lang="ts">
+import AppButton from '@/components/AppButton.vue';
 import AppCalendarInput from '@/components/AppCalendarInput.vue';
 import InputError from '@/components/InputError.vue';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { BreadcrumbItem } from '@/types';
 import { Head, useForm } from '@inertiajs/vue3';
-import { Loader2 } from 'lucide-vue-next';
 import { toast } from 'vue-sonner';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -50,10 +49,7 @@ function submitForm() {
                     <InputError :message="form.errors.media" />
                 </div>
             </div>
-            <Button type="submit" :disabled="form.processing" variant="default">
-                <Loader2 v-if="form.processing" class="mr-2 h-4 w-4 animate-spin" />
-                {{ form.processing ? 'Please wait' : 'Create Task' }}
-            </Button>
+            <AppButton type="submit" variant="default" label="Create task" :isLoading="form.processing" />
         </form>
     </AppLayout>
 </template>

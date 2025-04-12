@@ -1,15 +1,15 @@
 <script setup lang="ts">
+import AppButton from '@/components/AppButton.vue';
 import AppCalendarInput from '@/components/AppCalendarInput.vue';
 import InputError from '@/components/InputError.vue';
 import Badge from '@/components/ui/badge/Badge.vue';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { BreadcrumbItem, Task } from '@/types';
 import { Head, useForm } from '@inertiajs/vue3';
-import { ArrowUpRight, Loader2 } from 'lucide-vue-next';
+import { ArrowUpRight } from 'lucide-vue-next';
 import { toast } from 'vue-sonner';
 
 const props = defineProps<{ task: Task }>();
@@ -64,10 +64,7 @@ function submitForm() {
                     <InputError :message="form.errors.media" />
                 </div>
             </div>
-            <Button type="submit" :disabled="form.processing" variant="default">
-                <Loader2 v-if="form.processing" class="mr-2 h-4 w-4 animate-spin" />
-                {{ form.processing ? 'Please wait' : 'Update Task' }}
-            </Button>
+            <AppButton type="submit" variant="default" label="Update task" :is-loading="form.processing" />
         </form>
     </AppLayout>
 </template>
