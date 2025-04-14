@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import AppButton from '@/components/AppButton.vue';
 import AppCalendarInput from '@/components/AppCalendarInput.vue';
+import AppForm from '@/components/AppForm.vue';
 import InputError from '@/components/InputError.vue';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -34,8 +35,8 @@ function submitForm() {
         <Head title="Create task" />
         <Card>
             <CardContent>
-                <form class="space-y-6" @submit.prevent="submitForm">
-                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <AppForm @submit="submitForm">
+                    <template #default>
                         <div class="grid gap-2">
                             <Label htmlFor="name">Task Name *</Label>
                             <Input id="name" v-model="form.name" class="mt-1 block w-full" />
@@ -51,9 +52,11 @@ function submitForm() {
                             <Input id="media" type="file" class="mt-1 block w-full" @change="form.media = $event.target.files?.[0]" />
                             <InputError :message="form.errors.media" />
                         </div>
-                    </div>
-                    <AppButton type="submit" variant="default" label="Create task" :isLoading="form.processing" />
-                </form>
+                    </template>
+                    <template #footer>
+                        <AppButton type="submit" variant="default" label="Create task" :isLoading="form.processing" />
+                    </template>
+                </AppForm>
             </CardContent>
         </Card>
     </AppLayout>
