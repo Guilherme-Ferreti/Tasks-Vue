@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
-use App\Models\Task;
+use App\Models\TaskCategory;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        Task::factory(10)->create();
+        TaskCategory::factory(5)
+            ->hasTasks(3)
+            ->create();
     }
 }

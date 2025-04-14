@@ -14,8 +14,9 @@ defineProps<{ tasks: PaginatedResponse<Task> }>();
 
 function deleteTask(id: string) {
     if (confirm('Are you sure you want to delete this task?')) {
-        router.delete(route('tasks.destroy', id));
-        toast.success('Task deleted successfully!');
+        router.delete(route('tasks.destroy', id), {
+            onSuccess: () => toast.success('Task deleted successfully!'),
+        });
     }
 }
 </script>

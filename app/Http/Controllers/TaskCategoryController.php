@@ -39,18 +39,28 @@ class TaskCategoryController extends Controller
         return to_route('task-categories.index');
     }
 
-    public function edit(string $id)
+    public function edit(TaskCategory $taskCategory): Response
     {
-        //
+        return Inertia::render('TaskCategories/Edit', [
+            'taskCategory' => $taskCategory->toResource(),
+        ]);
     }
 
-    public function update(Request $request, string $id)
+    public function update(Request $request, TaskCategory $taskCategory)
     {
-        //
+        $attributes = $request->validate([
+            'name' => ['required', 'string', 'max:255', "unique:task_categories,id,$taskCategory->id"],
+        ]);
+
+        $taskCategory->update($attributes);
+
+        return to_route('task-categories.index');
     }
 
-    public function destroy(string $id)
+    public function destroy(TaskCategory $taskCategory): RedirectResponse
     {
-        //
+        $taskCategory->delete();
+
+        return to_route('task-categories.index');
     }
 }

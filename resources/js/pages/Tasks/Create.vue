@@ -24,7 +24,6 @@ const form = useForm({
 
 function submitForm() {
     form.post(route('tasks.store'), {
-        preserveScroll: true,
         onSuccess: () => toast.success('Task created successfully!'),
     });
 }

@@ -22,16 +22,15 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 const form = useForm({
+    _method: 'PUT',
     name: props.task.name,
     due_date: props.task.due_date,
     is_completed: props.task.is_completed,
     media: null as File | null,
-    _method: 'PUT',
 });
 
 function submitForm() {
     form.post(route('tasks.update', props.task.id), {
-        preserveScroll: true,
         onSuccess: () => toast.success('Task updated successfully!'),
     });
 }
