@@ -13,6 +13,6 @@ defineProps<{
 <template>
     <Button :variant="variant" :disabled="isLoading" :type="type">
         <Loader2 v-if="isLoading" class="mr-2 h-4 w-4 animate-spin" />
-        {{ isLoading ? 'Please wait' : 'Create Task' }}
+        {{ isLoading ? 'Please wait' : label }}
     </Button>
 </template>

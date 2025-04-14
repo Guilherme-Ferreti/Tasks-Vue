@@ -38,23 +38,23 @@ function submitForm() {
                 <AppForm @submit="submitForm">
                     <template #default>
                         <div class="grid gap-2">
-                            <Label htmlFor="name">Task Name *</Label>
-                            <Input id="name" v-model="form.name" class="mt-1 block w-full" />
+                            <Label for="name">Task Name *</Label>
+                            <Input id="name" type="text" v-model="form.name" tabindex="1" autofocus />
                             <InputError :message="form.errors.name" />
                         </div>
                         <div class="grid gap-2">
-                            <Label htmlFor="due_date">Due Date</Label>
-                            <AppCalendarInput v-model="form.due_date" id="due_date" class="mt-1 block w-full" />
+                            <Label for="due_date">Due Date</Label>
+                            <AppCalendarInput id="due_date" v-model="form.due_date" tabindex="2" />
                             <InputError :message="form.errors.due_date" />
                         </div>
                         <div class="grid gap-2">
-                            <Label htmlFor="media">Media</Label>
-                            <Input id="media" type="file" class="mt-1 block w-full" @change="form.media = $event.target.files?.[0]" />
+                            <Label for="media">Media</Label>
+                            <Input id="media" type="file" @change="form.media = $event.target.files?.[0]" tabindex="3" />
                             <InputError :message="form.errors.media" />
                         </div>
                     </template>
                     <template #footer>
-                        <AppButton type="submit" variant="default" label="Create task" :isLoading="form.processing" />
+                        <AppButton type="submit" variant="default" label="Create" :isLoading="form.processing" tabindex="4" />
                     </template>
                 </AppForm>
             </CardContent>

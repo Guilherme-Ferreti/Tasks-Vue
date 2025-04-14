@@ -45,31 +45,31 @@ function submitForm() {
                 <AppForm @submit="submitForm">
                     <template #default>
                         <div class="grid gap-2">
-                            <Label htmlFor="name">Task Name *</Label>
-                            <Input id="name" v-model="form.name" class="mt-1 block w-full" />
+                            <Label for="name">Task Name *</Label>
+                            <Input id="name" type="text" v-model="form.name" tabindex="1" autofocus />
                             <InputError :message="form.errors.name" />
                         </div>
                         <div class="grid gap-2">
-                            <Label htmlFor="due_date">Due Date</Label>
-                            <AppCalendarInput v-model="form.due_date" />
+                            <Label for="due_date">Due Date</Label>
+                            <AppCalendarInput v-model="form.due_date" tabindex="2" />
                             <InputError :message="form.errors.due_date" />
                         </div>
                         <div class="grid gap-2">
-                            <Label htmlFor="is_completed">Completed?</Label>
-                            <Switch id="is_completed" v-model="form.is_completed" class="mt-1 cursor-pointer" />
+                            <Label for="is_completed">Completed?</Label>
+                            <Switch id="is_completed" v-model="form.is_completed" class="cursor-pointer" tabindex="3" />
                             <InputError :message="form.errors.is_completed" />
                         </div>
                         <div class="grid gap-2">
-                            <Label htmlFor="media">Media</Label>
+                            <Label for="media">Media</Label>
                             <a v-if="task.media" :href="task.media.url" target="_blank" :title="task.media.name">
                                 <Badge variant="secondary">There is a file already attached <ArrowUpRight class="h-4 w-4" /></Badge>
                             </a>
-                            <Input id="media" type="file" class="mt-1 block w-full" @change="form.media = $event.target.files?.[0]" />
+                            <Input id="media" type="file" @change="form.media = $event.target.files?.[0]" tabindex="4" />
                             <InputError :message="form.errors.media" />
                         </div>
                     </template>
                     <template #footer>
-                        <AppButton type="submit" variant="default" label="Update task" :is-loading="form.processing" />
+                        <AppButton type="submit" variant="default" label="Update" :is-loading="form.processing" tabindex="5" />
                     </template>
                 </AppForm>
             </CardContent>
