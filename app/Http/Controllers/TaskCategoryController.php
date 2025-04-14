@@ -12,9 +12,15 @@ use Inertia\Response;
 
 class TaskCategoryController extends Controller
 {
-    public function index()
+    public function index(): Response
     {
-        dd(TaskCategory::all());
+        $taskCategories = TaskCategory::query()
+            ->withCount('tasks')
+            ->paginate(10);
+
+        return Inertia::render('TaskCategories/Index', [
+            'taskCategories' => $taskCategories->toResourceCollection(),
+        ]);
     }
 
     public function create(): Response
