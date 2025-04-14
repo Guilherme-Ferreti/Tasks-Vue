@@ -41,7 +41,7 @@ export interface PaginationMeta {
     total: number;
 }
 
-export interface PaginatedResponse<Resource = Task | User> {
+export interface PaginatedResponse<Resource = Task | TaskCategory | User> {
     data: Resource[];
     links: {
         first: string | null;
@@ -72,6 +72,12 @@ export interface Task {
         url: string;
         type: string;
     };
+}
+
+export interface TaskCategory {
+    id: string;
+    name: string;
+    tasks_count: number;
 }
 
 export type BreadcrumbItemType = BreadcrumbItem;

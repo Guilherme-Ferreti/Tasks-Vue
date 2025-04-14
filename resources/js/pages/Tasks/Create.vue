@@ -32,7 +32,7 @@ function submitForm() {
 
 <template>
     <AppLayout :breadcrumbs="breadcrumbs">
-        <Head title="Create task" />
+        <Head title="Create Task" />
         <Card>
             <CardContent>
                 <AppForm @submit="submitForm">
@@ -43,7 +43,7 @@ function submitForm() {
                             <InputError :message="form.errors.name" />
                         </div>
                         <div class="grid gap-2">
-                            <Label for="due_date">Due Date</Label>
+                            <Label for="due_date">Due Date *</Label>
                             <AppCalendarInput id="due_date" v-model="form.due_date" tabindex="2" />
                             <InputError :message="form.errors.due_date" />
                         </div>

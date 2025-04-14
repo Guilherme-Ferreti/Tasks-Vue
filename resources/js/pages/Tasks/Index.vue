@@ -22,12 +22,13 @@ function deleteTask(id: string) {
 
 <template>
     <AppLayout>
-        <Head title="Tasks" />
-        <div class="flex justify-end">
-            <Link :class="buttonVariants({ variant: 'secondary' })" :href="route('tasks.create')">Create task</Link>
+        <Head title="Tasks List" />
+        <div class="flex justify-end gap-4">
+            <Link :class="buttonVariants({ variant: 'secondary' })" :href="route('task-categories.index')">Manage Categories</Link>
+            <Link :class="buttonVariants({ variant: 'secondary' })" :href="route('tasks.create')">Create Task</Link>
         </div>
-        <Card class="flex justify-end">
-            <CardContent class="space-y-6">
+        <Card>
+            <CardContent class="space-y-4">
                 <Table>
                     <TableHeader>
                         <TableRow>

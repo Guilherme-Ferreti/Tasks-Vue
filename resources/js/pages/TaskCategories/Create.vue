@@ -11,7 +11,8 @@ import { Head, useForm } from '@inertiajs/vue3';
 import { toast } from 'vue-sonner';
 
 const breadcrumbs: BreadcrumbItem[] = [
-    { title: 'Task categories', href: route('task-categories.create') },
+    { title: 'Tasks', href: route('tasks.index') },
+    { title: 'Categories', href: route('task-categories.index') },
     { title: 'Create', href: '' },
 ];
 
@@ -29,7 +30,7 @@ function submitForm() {
 
 <template>
     <AppLayout :breadcrumbs="breadcrumbs">
-        <Head title="Create task category" />
+        <Head title="Create Task Category" />
         <Card>
             <CardContent>
                 <AppForm @submit="submitForm">

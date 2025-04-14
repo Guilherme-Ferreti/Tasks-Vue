@@ -39,7 +39,7 @@ function submitForm() {
 
 <template>
     <AppLayout :breadcrumbs="breadcrumbs">
-        <Head title="Edit task" />
+        <Head title="Edit Task" />
         <Card>
             <CardContent>
                 <AppForm @submit="submitForm">
