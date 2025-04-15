@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        TaskCategory::factory(5)
-            ->hasTasks(3)
+        TaskCategory::factory(3)
+            ->hasTasks(15)
             ->create();
     }
 }
