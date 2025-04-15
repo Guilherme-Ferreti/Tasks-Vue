@@ -5,12 +5,24 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { displayDate } from '@/lib/utils';
-import { PaginatedResponse, Task } from '@/types';
+import { PaginatedResponse, Task, TaskCategory } from '@/types';
 import { Head, Link, router } from '@inertiajs/vue3';
 import { File, FileAudio, FileImage, FileText, FileVideo, Pencil, Trash } from 'lucide-vue-next';
 import { toast } from 'vue-sonner';
 
-defineProps<{ tasks: PaginatedResponse<Task> }>();
+const props = defineProps<{
+    tasks: PaginatedResponse<Task>;
+    categories: TaskCategory[];
+    selectedCategories: string[];
+}>();
+
+const selectedCategories = props.selectedCategories ? props.selectedCategories : [];
+
+function selectCategory(id: string) {
+    const selected = selectedCategories.includes(id) ? selectedCategories.filter((category) => category !== id) : [...selectedCategories, id];
+
+    router.visit('/tasks', { data: { categories: selected } });
+}
 
 function deleteTask(id: string) {
     if (confirm('Are you sure you want to delete this task?')) {
@@ -27,6 +39,16 @@ function deleteTask(id: string) {
         <div class="flex justify-end gap-4">
             <Link :class="buttonVariants({ variant: 'secondary' })" :href="route('task-categories.index')">Manage Categories</Link>
             <Link :class="buttonVariants({ variant: 'secondary' })" :href="route('tasks.create')">Create Task</Link>
+        </div>
+        <div class="mt-4 flex flex-row justify-center gap-x-2">
+            <Button
+                v-for="category in categories"
+                :key="category.id"
+                @click="selectCategory(category.id.toString())"
+                :class="buttonVariants({ variant: selectedCategories.includes(category.id.toString()) ? 'default' : 'secondary' })"
+            >
+                {{ category.name }} ({{ category.tasks_count }})
+            </Button>
         </div>
         <Card>
             <CardContent class="space-y-4">

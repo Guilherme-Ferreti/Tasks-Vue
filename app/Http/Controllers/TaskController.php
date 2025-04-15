@@ -9,21 +9,33 @@ use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
 use App\Models\TaskCategory;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class TaskController extends Controller
 {
-    public function index(): Response
+    public function index(Request $request): Response
     {
         $tasks = Task::query()
             ->orderBy('is_completed')
             ->orderBy('due_date')
             ->with('media', 'categories')
-            ->paginate(10);
+            ->when(
+                $request->has('categories'),
+                fn ($query) => $query->whereHas('categories', fn ($query) => $query->whereIn('id', $request->query('categories'))
+                ))
+            ->paginate(10)
+            ->withQueryString();
+
+        $categories = TaskCategory::query()
+            ->withCount('tasks')
+            ->get();
 
         return Inertia::render('Tasks/Index', [
-            'tasks' => $tasks->toResourceCollection(),
+            'tasks'              => $tasks->toResourceCollection(),
+            'categories'         => $categories->toResourceCollection(),
+            'selectedCategories' => $request->query('categories'),
         ]);
     }
 
