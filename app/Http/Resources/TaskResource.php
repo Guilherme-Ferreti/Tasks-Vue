@@ -27,6 +27,8 @@ class TaskResource extends JsonResource
                 'name' => $this->getFirstMedia()->name,
                 'type' => $this->getFirstMedia()->mime_type,
             ], null),
+
+            'categories' => TaskCategoryResource::collection($this->categories),
         ];
     }
 }

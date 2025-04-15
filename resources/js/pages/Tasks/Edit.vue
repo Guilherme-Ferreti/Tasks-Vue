@@ -8,13 +8,14 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { BreadcrumbItem, Task } from '@/types';
+import { BreadcrumbItem, Task, TaskCategory } from '@/types';
 import { Head, useForm } from '@inertiajs/vue3';
 import { ArrowUpRight } from 'lucide-vue-next';
 import { toast } from 'vue-sonner';
 
-const props = defineProps<{ task: Task }>();
+const props = defineProps<{ task: Task; categories: TaskCategory[] }>();
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Tasks', href: route('tasks.index') },
@@ -27,6 +28,7 @@ const form = useForm({
     due_date: props.task.due_date,
     is_completed: props.task.is_completed,
     media: null as File | null,
+    categories: props.task.categories.map((category: TaskCategory) => category.id),
 });
 
 function submitForm() {
@@ -65,6 +67,17 @@ function submitForm() {
                             </a>
                             <Input id="media" type="file" @change="form.media = $event.target.files?.[0]" tabindex="4" />
                             <InputError :message="form.errors.media" />
+                        </div>
+                        <div class="grid gap-2">
+                            <Label htmlFor="categories">Categories</Label>
+
+                            <ToggleGroup type="multiple" variant="outline" size="lg" v-model="form.categories">
+                                <ToggleGroupItem v-for="category in categories" :key="category.id" :value="category.id">
+                                    {{ category.name }}
+                                </ToggleGroupItem>
+                            </ToggleGroup>
+
+                            <InputError :message="form.errors.categories" />
                         </div>
                     </template>
                     <template #footer>

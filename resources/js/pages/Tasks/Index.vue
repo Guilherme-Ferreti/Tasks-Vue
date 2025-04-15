@@ -35,8 +35,9 @@ function deleteTask(id: string) {
                         <TableRow>
                             <TableHead>Task</TableHead>
                             <TableHead class="w-[150px]">File</TableHead>
+                            <TableHead class="w-[150px]">Categories</TableHead>
+                            <TableHead class="w-[150px]">Status</TableHead>
                             <TableHead class="w-[150px]">Due Date</TableHead>
-                            <TableHead class="w-[120px]">Status</TableHead>
                             <TableHead class="w-[120px] text-right">Actions</TableHead>
                         </TableRow>
                     </TableHeader>
@@ -45,9 +46,8 @@ function deleteTask(id: string) {
                             <TableCell>{{ task.name }}</TableCell>
                             <TableCell class="text-sm text-gray-600">
                                 <span v-if="!task.media">No file.</span>
-                                <a v-else :href="task.media.url" target="_blank" :title="task.media.name">
+                                <a v-else :href="task.media.url" target="_blank" :title="task.media.type + ': ' + task.media.name">
                                     <span class="flex items-center justify-between gap-2">
-                                        {{ task.media.type }}
                                         <FileAudio v-if="task.media.type.includes('audio')" />
                                         <FileVideo v-else-if="task.media.type.includes('video')" />
                                         <FileImage v-else-if="task.media.type.includes('image')" />
@@ -56,10 +56,22 @@ function deleteTask(id: string) {
                                     </span>
                                 </a>
                             </TableCell>
-                            <TableCell>{{ displayDate(task.due_date) }}</TableCell>
+                            <TableCell>
+                                <template v-if="task.categories.length">
+                                    <span
+                                        v-for="category in task.categories"
+                                        :key="category.id"
+                                        class="mr-2 rounded-full bg-gray-200 px-2 py-1 text-gray-800"
+                                    >
+                                        {{ category.name }}
+                                    </span>
+                                </template>
+                                <span v-else class="text-sm text-gray-600">No categories.</span>
+                            </TableCell>
                             <TableCell :class="{ 'text-green-600': task.is_completed, 'text-blue-700': !task.is_completed }">
                                 {{ task.is_completed ? 'Completed' : 'In Progress' }}
                             </TableCell>
+                            <TableCell>{{ displayDate(task.due_date) }}</TableCell>
                             <TableCell class="flex justify-end gap-x-2">
                                 <Link :href="route('tasks.edit', task.id)" :class="buttonVariants({ variant: 'secondary' })">
                                     <Pencil />

@@ -72,6 +72,7 @@ export interface Task {
         url: string;
         type: string;
     };
+    categories: TaskCategory[];
 }
 
 export interface TaskCategory {
